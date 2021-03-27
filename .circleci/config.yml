@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Init terraform
-          command: terraform init
+          command: terraform init -backend-config="bucket=$TF_VAR_STATE_S3_BUCKET"
       - run:
           name: Plan terraform
           command: terraform plan -out=./terraform.tfplan
