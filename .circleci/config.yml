@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: Init terraform
+          command: terraform init
+      - run:
+          name: Plan terraform
+          command: terraform plan -out=./terraform.tfplan
+      - run:
+          name: Apply terraform
+          command: terraform apply -auto-approve "./terraform.tfplan"
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: main
